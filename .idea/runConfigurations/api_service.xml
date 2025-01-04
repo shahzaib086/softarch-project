@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="api-service" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="api-service" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.api.Application" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.example.api.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

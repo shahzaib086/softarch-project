@@ -1,0 +1,4 @@
+com/example/publisher/utils/JsonUtil.class
+com/example/publisher/service/PublisherService.class
+com/example/publisher/controller/NavigationController.class
+com/example/publisher/Application.class
