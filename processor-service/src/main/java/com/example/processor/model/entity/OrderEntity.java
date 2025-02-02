@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
@@ -29,7 +30,7 @@ public class OrderEntity implements Serializable {
     private OrderStatus status;
 
     @Column(name = "ORDER_DATE")
-    private Date orderDate;
+    private String orderDate;
 
     @Column(name = "TOTAL_PRICE")
     private Long totalPrice;
