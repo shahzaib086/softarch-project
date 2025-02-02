@@ -1,3 +1,5 @@
-com/example/api/service/ProcessorServiceClient.class
-com/example/api/Application.class
-com/example/api/controller/ApiController.class
+com\example\api\service\ProcessorServiceClient.class
+com\example\api\config\FeignClientConfig.class
+com\example\api\Application.class
+com\example\api\dto\DataRequest.class
+com\example\api\controller\ApiController.class

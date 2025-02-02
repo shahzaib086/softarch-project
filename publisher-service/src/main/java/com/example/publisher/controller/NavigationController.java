@@ -1,5 +1,7 @@
 package com.example.publisher.controller;
 
+import com.example.publisher.dto.DataRequest;
+import com.example.publisher.dto.OrderDto;
 import com.example.publisher.service.PublisherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,14 +18,30 @@ public class NavigationController {
     private final PublisherService publisherService;
 
     @PostMapping("/decode-and-send")
-    public ResponseEntity<String> decodeAndSend(@RequestBody Object routeRequest) {
+    public ResponseEntity<String> decodeAndSend(@RequestBody DataRequest routeRequest) {
+        System.out.println("SHAHZAIB TEST");
+        System.out.println(routeRequest);
         try {
-            publisherService.processRouteRequest(routeRequest);
+            publisherService.processRouteRequest("example-topic",routeRequest);
             return ResponseEntity.ok("Data sent to Kafka successfully.");
         } catch (Exception e) {
             //TODO use a controller advice to handle exceptions
-            log.error("decodeAndSend", e);
+            log.error("decodeAndSend::", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing request: " + e.getMessage());
         }
     }
+
+    @PostMapping("/create-order")
+    public ResponseEntity<String> createOrder(@RequestBody OrderDto routeRequest) {
+        System.out.println("CREATE ORDER");
+        System.out.println(routeRequest);
+        try {
+            publisherService.processRouteRequest("topic-create-order",routeRequest);
+            return ResponseEntity.ok("Order Data sent to Kafka successfully.");
+        } catch (Exception e) {
+            log.error("createOrder::", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing request: " + e.getMessage());
+        }
+    }
+
 }
