@@ -65,19 +65,17 @@ public class ProcessorService {
     }
 
     @KafkaListener(topics = "topic-create-product", groupId = "processor-group")
-    public void createProduct(String message) {
+    public void createProduct(String message) throws JsonProcessingException {
 
         log.info("CreateProduct: Received message: {}", message);
         System.out.println(JsonUtil.toJson(message));
 
         // TODO other operation that makes sense
-        ProductEntity order = new ProductEntity();
-        order.setId(11L);
-        order.setTitle("Product 1");
-        order.setDescription("Description");
-        order.setCategory("cat");
-        order.setPrice(100L);
-        productRepository.save(order);
+        ProductEntity product = JsonUtil.fromJson(message, ProductEntity.class);
+        System.out.println("Before create after mapping");
+        System.out.println(product);
+
+        productRepository.save(product);
 
         System.out.println("Product Created Successfully: " + message);
     }
