@@ -4,6 +4,7 @@ import com.example.publisher.dto.DataRequest;
 import com.example.publisher.dto.OrderDto;
 import com.example.publisher.dto.OrderItemDto;
 import com.example.publisher.dto.OrderPaymentDto;
+import com.example.publisher.dto.ProductDto;
 import com.example.publisher.service.PublisherService;
 import com.example.publisher.utils.RestHelper;
 import lombok.RequiredArgsConstructor;
@@ -80,6 +81,19 @@ public class NavigationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     RestHelper.toJson("error","Error processing request: " + e.getMessage())
             );
+        }
+    }
+
+    @PostMapping("/create-product")
+    public ResponseEntity<String> createProduct(@RequestBody ProductDto routeRequest) {
+        System.out.println("CREATE PRODUCT");
+        System.out.println(routeRequest);
+        try {
+            publisherService.processRouteRequest("topic-create-product",routeRequest);
+            return ResponseEntity.ok("Product Data sent to Kafka successfully.");
+        } catch (Exception e) {
+            log.error("createProduct::", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing request: " + e.getMessage());
         }
     }
 

@@ -6,11 +6,13 @@ import com.example.processor.model.ProcessedData;
 import com.example.processor.model.entity.OrderEntity;
 import com.example.processor.model.entity.OrderItemEntity;
 import com.example.processor.model.entity.OrderPaymentEntity;
+import com.example.processor.model.entity.ProductEntity;
 import com.example.processor.model.enums.OrderStatus;
 import com.example.processor.repository.OrderItemRepository;
 import com.example.processor.repository.OrderPaymentRepository;
 import com.example.processor.repository.OrderRepository;
 import com.example.processor.repository.ProcessedDataRepository;
+import com.example.processor.repository.ProductRepository;
 import com.example.processor.utils.JsonUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class ProcessorService {
 
     private final OrderPaymentRepository orderPaymentRepository;
 
+    private final ProductRepository productRepository;
 
     // TODO extract all hardcoded values into .properties files
     @KafkaListener(topics = "example-topic", groupId = "processor-group")
@@ -101,6 +104,22 @@ public class ProcessorService {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
+    }
+    
+    @KafkaListener(topics = "topic-create-product", groupId = "processor-group")
+    public void createProduct(String message) throws JsonProcessingException {
+
+        log.info("CreateProduct: Received message: {}", message);
+        System.out.println(JsonUtil.toJson(message));
+
+        // TODO other operation that makes sense
+        ProductEntity product = JsonUtil.fromJson(message, ProductEntity.class);
+        System.out.println("Before create after mapping");
+        System.out.println(product);
+
+        productRepository.save(product);
+
+        System.out.println("Product Created Successfully: " + message);
     }
 
 }
