@@ -16,6 +16,7 @@
         <module>api-service</module>
         <module>processor-service</module>
         <module>publisher-service</module>
+        <module>notification-service</module>
     </modules>
 
     <dependencyManagement>

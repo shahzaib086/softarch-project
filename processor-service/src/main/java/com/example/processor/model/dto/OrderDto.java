@@ -3,8 +3,6 @@ package com.example.processor.model.dto;
 import com.example.processor.model.enums.OrderStatus;
 import lombok.Data;
 
-import java.util.List;
-
 
 @Data
 public class OrderDto {
