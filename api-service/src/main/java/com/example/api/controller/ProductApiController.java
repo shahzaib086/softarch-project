@@ -31,4 +31,9 @@ public class ProductApiController {
     public ResponseEntity<String> updateProduct(@RequestBody ProductDto product) {
         return client.updateProduct(product);
     }
+
+    @PostMapping("/api/product/delete")
+    public ResponseEntity<String> deleteProduct(@RequestBody ProductDto product) {
+        return client.deleteProduct(product);
+    }
 }

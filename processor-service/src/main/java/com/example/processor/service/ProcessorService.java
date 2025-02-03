@@ -18,6 +18,8 @@ import com.example.processor.repository.ProductRepository;
 import com.example.processor.utils.JsonUtil;
 import com.example.publisher.service.PublisherService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,6 +167,24 @@ public class ProcessorService {
         }
 
         System.out.println("Product Update Successfully: " + message);
+    }
+
+    @KafkaListener(topics = "topic-delete-product", groupId = "processor-group")
+    public void deleteProduct(String message) throws JsonProcessingException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(message);
+        JsonNode idNode = rootNode.get("id");
+
+        if (idNode == null || idNode.isNull() || !idNode.canConvertToLong()) {
+            log.error("Invalid ID received, cannot delete product.");
+            return;
+        }
+
+        Long productId = idNode.asLong();
+        productRepository.deleteById(productId);
+
+        System.out.println("Product Delete Successfully: " + message);
     }
 
 //    @KafkaListener(topics = "topic-get-products", groupId = "processor-group")

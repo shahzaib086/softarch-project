@@ -18,4 +18,7 @@ public interface ProductServiceClient {
 
     @PutMapping("/update-product")
     ResponseEntity<String> updateProduct(@RequestBody ProductDto routeRequest);
+
+    @PostMapping("/delete-product")
+    ResponseEntity<String> deleteProduct(@RequestBody ProductDto routeRequest);
 }

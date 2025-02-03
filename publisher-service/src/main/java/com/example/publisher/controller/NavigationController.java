@@ -127,4 +127,15 @@ public class NavigationController {
         }
     }
 
+    @PostMapping("/delete-product")
+    public ResponseEntity<String> deleteProduct(@RequestBody ProductDto routeRequest) {
+        try {
+            productService.processRouteRequest("topic-delete-product", routeRequest);
+            return ResponseEntity.ok("Product Data sent to Kafka successfully.");
+        } catch (Exception e) {
+            log.error("deleteProduct::", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing request: " + e.getMessage());
+        }
+    }
+
 }
