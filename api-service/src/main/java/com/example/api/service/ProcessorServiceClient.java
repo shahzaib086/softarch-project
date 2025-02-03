@@ -9,12 +9,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Map;
-=======
->>>>>>> 84abe38fd478012d3ff0325acfa4d92cfa87f343
 
 
 // TODO extract hardcoded values into .properties files

@@ -26,4 +26,9 @@ public class ProductApiController {
     public ResponseEntity<String> createProduct(@RequestBody ProductDto product) {
         return client.createProduct(product);
     }
+
+    @PutMapping("/api/product/update")
+    public ResponseEntity<String> updateProduct(@RequestBody ProductDto product) {
+        return client.updateProduct(product);
+    }
 }

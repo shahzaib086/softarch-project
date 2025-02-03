@@ -77,6 +77,8 @@ public class ProductService {
 //        }
 //    }
 
+
+
     public List<ProductDto> fetchProducts(String topic) {
         log.info("Sending request to fetch products from topic: {}", topic);
 

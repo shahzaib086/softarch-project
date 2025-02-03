@@ -101,7 +101,6 @@ public class NavigationController {
     }
 
 
-
     @PostMapping("/create-product")
     public ResponseEntity<String> createProduct(@RequestBody ProductDto routeRequest) {
         System.out.println("CREATE PRODUCT");
@@ -111,6 +110,19 @@ public class NavigationController {
             return ResponseEntity.ok("Product Data sent to Kafka successfully.");
         } catch (Exception e) {
             log.error("createProduct::", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing request: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/update-product")
+    public ResponseEntity<String> updateProduct(@RequestBody ProductDto routeRequest) {
+        System.out.println("UPDATE PRODUCT");
+        System.out.println(routeRequest);
+        try {
+            productService.processRouteRequest("topic-update-product",routeRequest);
+            return ResponseEntity.ok("Product Data sent to Kafka successfully.");
+        } catch (Exception e) {
+            log.error("updateProduct::", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing request: " + e.getMessage());
         }
     }

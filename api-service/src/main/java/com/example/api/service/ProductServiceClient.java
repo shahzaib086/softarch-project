@@ -15,4 +15,7 @@ public interface ProductServiceClient {
 
     @PostMapping("/create-product")
     ResponseEntity<String> createProduct(@RequestBody ProductDto routeRequest);
+
+    @PutMapping("/update-product")
+    ResponseEntity<String> updateProduct(@RequestBody ProductDto routeRequest);
 }

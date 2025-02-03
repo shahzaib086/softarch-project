@@ -3,6 +3,7 @@ package com.example.processor.service;
 
 import com.example.processor.factory.PaymentServiceFactory;
 import com.example.processor.model.ProcessedData;
+import com.example.processor.model.dto.ProductDto;
 import com.example.processor.model.entity.OrderEntity;
 import com.example.processor.model.entity.OrderItemEntity;
 import com.example.processor.model.entity.OrderPaymentEntity;
@@ -21,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -125,6 +128,32 @@ public class ProcessorService {
         productRepository.save(product);
 
         System.out.println("Product Created Successfully: " + message);
+    }
+
+    @KafkaListener(topics = "topic-update-product", groupId = "processor-group")
+    public void updateProduct(String message) throws JsonProcessingException {
+
+        log.info("UpdateProduct: Received message: {}", message);
+        System.out.println(JsonUtil.toJson(message));
+
+        // TODO other operation that makes sense
+        ProductEntity product = JsonUtil.fromJson(message, ProductEntity.class);
+        System.out.println("Before create after mapping");
+        System.out.println(product);
+
+        Optional<ProductEntity> prod =  productRepository.findById(product.getId());
+        if (prod.isPresent()) {
+            ProductEntity updateProd = prod.get();
+            updateProd.setTitle(product.getTitle());
+            updateProd.setCategory(product.getCategory());
+            updateProd.setPrice(product.getPrice());
+            updateProd.setDescription(product.getDescription());
+            productRepository.save(updateProd);
+        } else {
+            throw new RuntimeException("Update failed no book found with this id: " + product.getId());
+        }
+
+        System.out.println("Product Update Successfully: " + message);
     }
 
 //    @KafkaListener(topics = "topic-get-products", groupId = "processor-group")
