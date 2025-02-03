@@ -17,16 +17,19 @@ public class OrderItemEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "ORDERـID")
+    private Long orderId;
+
     @Column(name = "PRODUCTـID")
     private Long productId;
 
     @Column(name = "QUANTITY")
     private Long quantity;
 
-    @Column(name = "DESCRIPTION")
-    private String description;
+    @Column(name = "PRICE")
+    private Long price;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ORDER_ID")
-//    private OrderEntity orderEntity;
+    @Column(name = "CART_ID")
+    private Long cartId;
+
 }

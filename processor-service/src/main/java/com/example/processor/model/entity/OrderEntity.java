@@ -7,10 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.awt.*;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,6 +34,7 @@ public class OrderEntity implements Serializable {
     @Column(name = "TOTAL_PRICE")
     private Long totalPrice;
 
-//    @OneToMany(mappedBy = "orderEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<OrderItemEntity> orderItemEntityList;
+    @Column(name = "CART_ID")
+    private Long cartId;
+
 }

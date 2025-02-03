@@ -7,11 +7,12 @@ public class OrderItemDto {
 
     private Long id;
 
+    private Long cartId;
+
     private Long productId;
 
     private Long quantity;
 
-    private String description;
+    private Long price;
 
-//    private OrderDto orderDto;
 }

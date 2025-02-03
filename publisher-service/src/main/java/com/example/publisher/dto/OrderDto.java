@@ -3,6 +3,8 @@ package com.example.publisher.dto;
 import com.example.publisher.enums.OrderStatus;
 import lombok.Data;
 
+import java.util.List;
+
 
 @Data
 public class OrderDto {
@@ -17,5 +19,6 @@ public class OrderDto {
 
     private Long totalPrice;
 
-//    private List<OrderItemDto> orderItemDtoList;
+    private Long cartId;
+
 }
