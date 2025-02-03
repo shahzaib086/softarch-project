@@ -15,17 +15,20 @@ import org.springframework.stereotype.Service;
 public class ProcessorService {
 
     @KafkaListener(topics = "order-payment", groupId = "notification-group")
-    public void orderPaymentSuccess(String message) throws Exception {
+    public void orderPaymentSuccess(String message) {
+        try {
+            log.info("Received message: {}", message);
 
-        log.info("Received message: {}", message);
+            OrderNotifyDto entity = JsonUtil.fromJson(message, OrderNotifyDto.class);
 
-        OrderNotifyDto entity = JsonUtil.fromJson(message, OrderNotifyDto.class);
+            EmailNotificationService notificationService = EmailNotificationService.getInstance();
 
-        EmailNotificationService notificationService = EmailNotificationService.getInstance();
+            notificationService.notify(entity.getReceiverId(), entity.getTitle(), entity.getMessage());
 
-        notificationService.notify(entity.getReceiverId(),entity.getTitle(),entity.getMessage());
-
-        System.out.println("Customer has been notified" + message);
+            log.info("Customer has been notified: {}", entity);
+        } catch (Exception e) {
+            log.error("Error processing message: {}", message, e);
+        }
     }
 
 }

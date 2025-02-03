@@ -15,7 +15,8 @@ public class NotificationServiceClient {
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
-    public void processRouteRequest(String topic,Object data) {
+
+    public void processRouteRequest(String topic, Object data) {
         try {
             TimeUnit.MILLISECONDS.sleep(BASE_DELAY);
             log.info("Message {} sent", data);
@@ -25,13 +26,11 @@ public class NotificationServiceClient {
             Thread.currentThread().interrupt();
         }
     }
-
     private void sendToKafka(String topic, Object data) {
         String message = JsonUtil.toJson(data);
-        log.info("send data: " + message);
+        log.info("Send Data: " + message);
         System.out.println("Topic: " + topic);
-        System.out.println("Send data: " + message);
-//        kafkaTemplate.send("example-topic", data.toString(), message);
+        System.out.println("Send Data: " + message);
         kafkaTemplate.send(topic, data.toString(), message);
     }
 }

@@ -23,11 +23,16 @@ public class EmailNotificationService implements NotificationService {
      * @throws Exception if an error occurs during notification
      */
     @Override
-    public Boolean notify(Long receiverId, String title, String message) throws Exception {
-        System.out.println("Notify:: Receiver Id : " + receiverId);
-        System.out.println("Notify:: Title: " + title);
-        System.out.println("Notify:: Message: " + message);
+    public Boolean notify(Long receiverId, String title, String message) {
+        try {
+            System.out.println("Notify:: Receiver Id : " + receiverId);
+            System.out.println("Notify:: Title: " + title);
+            System.out.println("Notify:: Message: " + message);
 
-        return true;
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
