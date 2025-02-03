@@ -89,6 +89,11 @@ git clone https://github.com/shahzaib086/softarch-project/tree/main
    
 5. Now Start All Services in IntelliJ
 
+6. All APIs will be served at url:
+   ```
+   http://localhost:8080/api
+   ```
+
 # Docker Configuration File
 ```
 version: '3.8'
