@@ -10,15 +10,18 @@
         <module name="processor-service" />
         <module name="api-service" />
         <module name="publisher-service" />
+        <module name="notification-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="fleet-management-engine" target="17" />
+      <module name="notification" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-service" options="" />
+      <module name="notification" options="-parameters" />
       <module name="processor-service" options="" />
     </option>
   </component>

@@ -3,6 +3,7 @@ package com.example.processor.service;
 
 import com.example.processor.factory.PaymentServiceFactory;
 import com.example.processor.model.ProcessedData;
+import com.example.processor.model.dto.OrderNotifyDto;
 import com.example.processor.model.entity.OrderEntity;
 import com.example.processor.model.entity.OrderItemEntity;
 import com.example.processor.model.entity.OrderPaymentEntity;
@@ -14,6 +15,7 @@ import com.example.processor.repository.OrderRepository;
 import com.example.processor.repository.ProcessedDataRepository;
 import com.example.processor.repository.ProductRepository;
 import com.example.processor.utils.JsonUtil;
+import com.example.publisher.service.PublisherService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +37,8 @@ public class ProcessorService {
     private final OrderPaymentRepository orderPaymentRepository;
 
     private final ProductRepository productRepository;
+
+    private final NotificationServiceClient notificationServiceClient;
 
     // TODO extract all hardcoded values into .properties files
     @KafkaListener(topics = "example-topic", groupId = "processor-group")
@@ -97,6 +101,13 @@ public class ProcessorService {
             if( checkPayment ){
                 orderPaymentRepository.save(payment);
                 System.out.println("Your Payment has been completed Successfully." + message);
+
+                OrderNotifyDto notify = new OrderNotifyDto();
+                notify.setReceiverId(123L);
+                notify.setTitle("Payment successful");
+                notify.setMessage("Your payment has been completed Successfully.");
+                notificationServiceClient.processRouteRequest("order-payment", notify);
+
             } else {
                 System.out.println("Your Payment has been failed." + message);
             }
