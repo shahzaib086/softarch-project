@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -15,6 +14,7 @@ public class PublisherService {
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
+
     public void processRouteRequest(String topic,Object data) {
         try {
             TimeUnit.MILLISECONDS.sleep(BASE_DELAY);
@@ -31,7 +31,7 @@ public class PublisherService {
         log.info("send data: " + message);
         System.out.println("Topic: " + topic);
         System.out.println("Send data: " + message);
-//        kafkaTemplate.send("example-topic", data.toString(), message);
         kafkaTemplate.send(topic, data.toString(), message);
     }
+
 }
